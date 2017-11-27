@@ -25,6 +25,7 @@
 
 # Common Issues:
 ## Map not displaying on Emulator
+Create a new AVD with a larger screen size.
 
 ## Physical Device: Unable to load scripts from assets 'index.android.bundle' 
 See https://github.com/facebook/react-native/issues/15070
