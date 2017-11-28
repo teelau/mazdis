@@ -1,3 +1,6 @@
+# ignore config files
+/src/**/config.js
+
 # OSX
 #
 .DS_Store
