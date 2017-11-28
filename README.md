@@ -2,14 +2,18 @@
 
 # Quick Start Guide
 ## Get React Native
+
+See "Building Projects with Native Code" tab here: https://facebook.github.io/react-native/docs/getting-started.html
+
 1. Install npm & node.js
 2. `npm install -g react-native`
 3. `npm install -g react-native-cli`
 
-## Windows + Android Setup
+## Toolchain Setup
 1. Get the repository files `git clone`
 2. Get required packages `npm install`
-3. See below for Emulator/Physical Device Debugging
+3. Link dependancies: `react-native link`
+4. See below for Emulator/Physical Device Debugging
 
 ## Android Emulator
 1. Install Android SDK
@@ -29,3 +33,6 @@ Create a new AVD with a larger screen size.
 
 ## Physical Device: Unable to load scripts from assets 'index.android.bundle' 
 See https://github.com/facebook/react-native/issues/15070
+
+## Could not install the app on the device, read the error above for details (android/gradlew permission error)
+See https://github.com/facebook/react-native/issues/8868
