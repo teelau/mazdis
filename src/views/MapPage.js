@@ -56,19 +56,23 @@ class MapPage extends Component {
                         longitudeDelta: 0.0421,
                     }}
                 >
-                    <MapView.Marker
+                    {/* <MapView.Marker
+                        title="Me marker"
                         coordinate={{
-                            latitude: 49.2629274,
-                            longitude: -123.1032735
-                        }}    
-                    />
+                            latitude: 49.2777,
+                            longitude: -123.1111
+                        }}  
+                    /> */}
                     {
-                        Object.keys(this.state.spotList).forEach((key) => {
-                            return (<MapView.Marker
+                        Object.keys(this.state.spotList).map((key, ind) => {
+                            console.log(this.state.spotList[key]);
+                            return(<MapView.Marker
+                                key={ind}
+                                title={this.state.spotList[key].address}
                                 coordinate={{
                                     latitude: this.state.spotList[key].lat,
                                     longitude: this.state.spotList[key].lng
-                                }}    
+                                }}  
                             />);
                         })
                     }
