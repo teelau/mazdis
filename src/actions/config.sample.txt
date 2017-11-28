@@ -1,0 +1,12 @@
+// This is the configuration file for dev and testing purposes
+// Fill with config information rename this to config.js
+
+export const FIREBASE_CONFIG = {
+    apiKey: '',
+    authDomain: '',
+    databaseURL: '',
+    projectId: '',
+    storageBucket: '',
+    messagingSenderId: ''
+};
+
