@@ -13,17 +13,27 @@ import { Button } from 'native-base';
 import { loginUser } from '../actions/Login.js';
 import { getAllSpots } from '../actions/ParkingSpots.js';
 
-import { DEMO_USER } from '../actions/config'
+import { DEMO_USER } from '../actions/config';
 
 class MapPage extends Component {
     constructor(props) {
         super(props);
         this.onPressLogIn = this.onPressLogIn.bind(this);               
         this.onPressGetSpots = this.onPressGetSpots.bind(this);
+        var spotsDs = new ListView.DataSource({rowHasChanged: (r1, r2) => {r1 !== r2}});
+        this.state = {
+            spotList: {},
+            spotsDs: spotsDs
+        };
     }
 
     componentWillReceiveProps(nextProps){
-        // TODO: handle and render places data in nextProps
+        if (nextProps.spotList !== this.props.spotList){
+            this.setState({
+                spotList: nextProps.spotList,
+                spotsDs: this.state.spotsDs.cloneWithRows(nextProps.spotList)
+            });
+        }
     }
 
     onPressLogIn() {
@@ -46,6 +56,22 @@ class MapPage extends Component {
                         longitudeDelta: 0.0421,
                     }}
                 >
+                    <MapView.Marker
+                        coordinate={{
+                            latitude: 49.2629274,
+                            longitude: -123.1032735
+                        }}    
+                    />
+                    {
+                        Object.keys(this.state.spotList).forEach((key) => {
+                            return (<MapView.Marker
+                                coordinate={{
+                                    latitude: this.state.spotList[key].lat,
+                                    longitude: this.state.spotList[key].lng
+                                }}    
+                            />);
+                        })
+                    }
                 </MapView>
                 <View style={styles.underMap}>
                     <Button 
@@ -79,7 +105,9 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        user: state.loginReducer.email
+        spotList: state.parkingSpotsReducer.spots,
+        userLoggedIn: state.loginReducer.loginSuccess,
+        userEmail: state.loginReducer.email
     };
 }
 

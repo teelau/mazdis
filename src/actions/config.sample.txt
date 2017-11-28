@@ -10,3 +10,8 @@ export const FIREBASE_CONFIG = {
     messagingSenderId: ''
 };
 
+// test user credentails in the Mazdis database
+export const DEMO_USER = {
+    email: 'user@me.com',
+    password: 'bbbbbbbb123'
+};
