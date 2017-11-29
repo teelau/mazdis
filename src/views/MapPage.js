@@ -8,7 +8,17 @@ import {
     ListView,
     View,
 } from 'react-native';
-import { Button } from 'native-base';
+import { 
+    Container,
+    Header,
+    Left,
+    Body,
+    Right,
+    Title,
+    Content,
+    Footer,
+    Button
+} from 'native-base';
 
 import { loginUser } from '../actions/Login.js';
 import { getAllSpots } from '../actions/ParkingSpots.js';
@@ -46,7 +56,14 @@ class MapPage extends Component {
 
     render() {
         return (
-            <View style={{flex: 1}}>
+            <Container style={{flex: 1}}>
+                <Header>
+                    <Left />
+                    <Body>
+                        <Title>Mazdis</Title>
+                    </Body>
+                    <Right />
+                </Header>
                 <MapView
                     style={styles.container} 
                     initialRegion={{
@@ -65,7 +82,6 @@ class MapPage extends Component {
                     /> */}
                     {
                         Object.keys(this.state.spotList).map((key, ind) => {
-                            console.log(this.state.spotList[key]);
                             return(<MapView.Marker
                                 key={ind}
                                 title={this.state.spotList[key].address}
@@ -91,7 +107,7 @@ class MapPage extends Component {
                         <Text>Get Spots</Text>
                     </Button>
                 </View>
-            </View>
+            </Container>
         );
     }
 }
