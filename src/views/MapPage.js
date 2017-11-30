@@ -84,7 +84,7 @@ class MapPage extends Component {
                         Object.keys(this.state.spotList).map((key, ind) => {
                             return(<MapView.Marker
                                 key={ind}
-                                title={this.state.spotList[key].address}
+                                title={this.state.spotList[key].title}
                                 coordinate={{
                                     latitude: this.state.spotList[key].lat,
                                     longitude: this.state.spotList[key].lng
