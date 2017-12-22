@@ -7,6 +7,7 @@ import {
     Text,
     ListView,
     View,
+    TouchableOpacity,
 } from 'react-native';
 import { 
     Container,
@@ -20,6 +21,7 @@ import {
     Button,
     Icon,
 } from 'native-base';
+import Modal from 'react-native-modal';
 
 import { loginUser } from '../actions/Login.js';
 import { getAllSpots } from '../actions/ParkingSpots.js';
@@ -34,7 +36,8 @@ class MapPage extends Component {
         var spotsDs = new ListView.DataSource({rowHasChanged: (r1, r2) => {r1 !== r2}});
         this.state = {
             spotList: {},
-            spotsDs: spotsDs
+            spotsDs: spotsDs,
+            visibleModal: true,
         };
         this.onPressGetSpots();
     }
@@ -55,6 +58,21 @@ class MapPage extends Component {
     onPressGetSpots() {
         this.props.getAllSpots();
     }
+
+    _renderButton = (text, onPress) => (
+        <TouchableOpacity onPress={onPress}>
+          <View style={styles.button}>
+            <Text>{text}</Text>
+          </View>
+        </TouchableOpacity>
+    );
+
+    _renderModalContent = () => (
+        <View style={styles.modalContent}>
+          <Text>Hello!</Text>
+          {this._renderButton('Close', () => this.setState({ visibleModal: null }))}
+        </View>
+    );
 
     render() {
         return (
@@ -114,8 +132,21 @@ class MapPage extends Component {
                     >
                         <Text>Get Spots</Text>
                     </Button>
+                    <Button
+                        style={styles.buttonStyle}
+                        onPress={this.onPressLogIn}
+                    >
+                        <Text>TestModal</Text>
+                    </Button>
                 </View>
-            </Container>
+
+
+                <Modal isVisible={this.state.visibleModal} style={styles.bottomModal}>
+                {this._renderModalContent()}
+                </Modal>
+
+
+            </Container>   
         );
     }
 }
@@ -156,7 +187,15 @@ const styles = StyleSheet.create({
         marginTop: 5,
         marginLeft: 5,
         marginRight: 5,
-    }
+    },
+      modalContent: {
+    backgroundColor: 'white',
+    padding: 22,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapPage);
