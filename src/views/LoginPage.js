@@ -29,6 +29,10 @@ import { DEMO_USER } from '../actions/config';
 class LoginPage extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            user: '',
+            password: '',
+        };
     }
 
     render() {
@@ -46,7 +50,10 @@ class LoginPage extends Component {
                     <Right />
                 </Header>
                 <View>
-                    <Text>Log in Page</Text>
+                    <TextInput
+                        onChangeText={(text) => {this.setState({user: text})}}
+                        value={this.state.user}
+                    />
                 </View>
             </Container>
         );

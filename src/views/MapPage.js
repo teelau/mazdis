@@ -37,7 +37,7 @@ class MapPage extends Component {
         this.state = {
             spotList: {},
             spotsDs: spotsDs,
-            visibleModal: true,
+            visibleModal: false,
         };
         this.onPressGetSpots();
     }
@@ -134,7 +134,7 @@ class MapPage extends Component {
                     </Button>
                     <Button
                         style={styles.buttonStyle}
-                        onPress={this.onPressLogIn}
+                        onPress={() => {this.setState({visibleModal: true})}}
                     >
                         <Text>TestModal</Text>
                     </Button>
