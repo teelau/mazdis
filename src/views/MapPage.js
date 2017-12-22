@@ -38,6 +38,7 @@ class MapPage extends Component {
             spotList: {},
             spotsDs: spotsDs,
             visibleModal: false,
+            selectedSpotId: -1,
         };
         this.onPressGetSpots();
     }
@@ -69,8 +70,11 @@ class MapPage extends Component {
 
     _renderModalContent = () => (
         <View style={styles.modalContent}>
-          <Text>Hello!</Text>
-          {this._renderButton('Close', () => this.setState({ visibleModal: null }))}
+          <Text>You selected MazDome: {this.state.selectedSpotId}</Text>
+          {this._renderButton('Close', () => this.setState({
+              visibleModal: false,
+              selectedSpotId: -1,
+            }))}
         </View>
     );
 
@@ -114,7 +118,14 @@ class MapPage extends Component {
                                 coordinate={{
                                     latitude: this.state.spotList[key].lat,
                                     longitude: this.state.spotList[key].lng
-                                }}  
+                                }}
+                                onPress={(e) => {
+                                    e.id = ind;
+                                    this.setState({
+                                        visibleModal: true,
+                                        selectedSpotId: e.id
+                                    });
+                                }}
                             />);
                         })
                     }
@@ -131,12 +142,6 @@ class MapPage extends Component {
                         onPress={this.onPressGetSpots}                        
                     >
                         <Text>Get Spots</Text>
-                    </Button>
-                    <Button
-                        style={styles.buttonStyle}
-                        onPress={() => {this.setState({visibleModal: true})}}
-                    >
-                        <Text>TestModal</Text>
                     </Button>
                 </View>
 
