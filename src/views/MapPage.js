@@ -39,6 +39,7 @@ class MapPage extends Component {
             spotsDs: spotsDs,
             visibleModal: false,
             selectedSpotId: -1,
+            userLoggedIn: false,
         };
         this.onPressGetSpots();
     }
@@ -48,6 +49,11 @@ class MapPage extends Component {
             this.setState({
                 spotList: nextProps.spotList,
                 spotsDs: this.state.spotsDs.cloneWithRows(nextProps.spotList)
+            });
+        }
+        if (nextProps.userLoggedIn != this.state.userLoggedIn){
+            this.setState({
+                userLoggedIn: nextProps.userLoggedIn,
             });
         }
     }
@@ -91,7 +97,7 @@ class MapPage extends Component {
                         <Title>Mazdis</Title>
                     </Body>
                     <Right>
-                        <Text>Sign in/Register</Text>
+                        {!this.state.userLoggedIn && <Text>Log in/Register</Text>}
                     </Right>
                 </Header>
                 <MapView

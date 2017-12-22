@@ -19,6 +19,10 @@ import {
     Footer,
     Button,
     Icon,
+    Form,
+    Item,
+    Input,
+    Label,
 } from 'native-base';
 
 import { loginUser } from '../actions/Login.js';
@@ -29,10 +33,22 @@ import { DEMO_USER } from '../actions/config';
 class LoginPage extends Component {
     constructor(props) {
         super(props);
+        this.onPressLogIn = this.onPressLogIn.bind(this);
         this.state = {
-            user: '',
+            email: '',
             password: '',
+            loginError: false,
         };
+    }
+
+    componentWillReceiveProps(nextProps){
+        this.setState({
+            loginError: nextProps.loginError,
+        });
+    }
+
+    onPressLogIn() {
+        this.props.loginUser(this.state.email, this.state.password);
     }
 
     render() {
@@ -50,32 +66,67 @@ class LoginPage extends Component {
                     <Right />
                 </Header>
                 <View>
-                    <TextInput
-                        onChangeText={(text) => {this.setState({user: text})}}
-                        value={this.state.user}
-                    />
+                    <Form>
+                        <Item inlineLabel>
+                            <Label style={styles.formLabel}>Email</Label>
+                            <Input
+                                style={styles.formInput}
+                                keyboardType={'email-address'}
+                                onChangeText={(text) => {this.setState({email: text})}}
+                            />
+                        </Item>
+                        <Item inlineLabel>
+                            <Label style={styles.formLabel}>Password</Label>
+                            <Input
+                                style={styles.formInput}
+                                secureTextEntry={true}
+                                onChangeText={(text) => {this.setState({password: text})}}
+                            />
+                        </Item>
+                        <Item>
+                            <Button block
+                                onPress={this.onPressLogIn}
+                            >
+                                <Text> Log In </Text>
+                            </Button>
+                        </Item>
+                        {
+                            this.state.loginError && <Text>Login Error!</Text>
+                        }
+                    </Form>
                 </View>
             </Container>
         );
     }
 }
+
+function mapDispatchToProps(dispatch) {
+    return {
+        loginUser: (email, password) => {
+            dispatch(loginUser(email, password));
+        },
+    };
+}
+
+function mapStateToProps(state) {
+    return {
+        userLoggedIn: state.loginReducer.loginSuccess,
+        loginError: state.loginReducer.loginError,
+        userEmail: state.loginReducer.email,
+    };
+}
+
 const styles = StyleSheet.create({
-    container: {
+    loginButton: {
+        flex: 1,
+        flexDirection: 'column',
+    },
+    formLabel: {
+        flex: 1,
+    },
+    formInput: {
         flex: 3,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    underMap: {
-        flex: 1,        
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    buttonStyle: {
-        marginTop: 5,
-        marginLeft: 5,
-        marginRight: 5,
     }
 });
 
-export default LoginPage;
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
