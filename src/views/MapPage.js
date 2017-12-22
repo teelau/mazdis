@@ -17,7 +17,8 @@ import {
     Title,
     Content,
     Footer,
-    Button
+    Button,
+    Icon,
 } from 'native-base';
 
 import { loginUser } from '../actions/Login.js';
@@ -35,6 +36,7 @@ class MapPage extends Component {
             spotList: {},
             spotsDs: spotsDs
         };
+        this.onPressGetSpots();
     }
 
     componentWillReceiveProps(nextProps){
@@ -58,11 +60,17 @@ class MapPage extends Component {
         return (
             <Container style={{flex: 1}}>
                 <Header>
-                    <Left />
+                    <Left>
+                        <Button transparent onPress={() => this.props.navigation.navigate('DrawerOpen')}>
+                            <Icon name='menu' />
+                        </Button>                        
+                    </Left>
                     <Body>
                         <Title>Mazdis</Title>
                     </Body>
-                    <Right />
+                    <Right>
+                        <Text>Sign in/Register</Text>
+                    </Right>
                 </Header>
                 <MapView
                     style={styles.container} 
