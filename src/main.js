@@ -7,6 +7,7 @@ import MapPage from './views/MapPage';
 import LoginPage from './views/LoginPage';
 import AcctPage from './views/AcctPage';
 
+import { checkLogin } from './actions/Login';
 
 const GuestRouter = DrawerNavigator(
     {
@@ -34,7 +35,9 @@ class Main extends Component {
         this.state = {
             loggedIn: false,
         };
+        this.props.checkLogin();
     }
+
     componentWillReceiveProps(nextProps){
         if (nextProps.loggedIn !== this.props.loggedIn){
             this.setState({
@@ -56,9 +59,18 @@ class Main extends Component {
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    console.log(dispatch);
+    return {
+        checkLogin: () => {
+            dispatch(checkLogin());
+        },
+    }
+}
+
 const mapStateToProps = (state) => ({
     loggedIn: state.loginReducer.loginSuccess,
 });
 
-export default connect(mapStateToProps)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
 

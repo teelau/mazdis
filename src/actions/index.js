@@ -1,4 +1,4 @@
-import * as firebase from 'firebase';
+import firebase from 'firebase';  
 import { FIREBASE_CONFIG } from './config';
 
 export const API_ROOT = 'http://some_host:8080/api';
