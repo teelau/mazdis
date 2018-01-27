@@ -28,6 +28,8 @@ import { getAllSpots } from '../actions/ParkingSpots.js';
 
 import { DEMO_USER } from '../actions/config';
 
+import HeaderBar from '../components/HeaderBar';
+
 class MapPage extends Component {
     constructor(props) {
         super(props);
@@ -87,7 +89,7 @@ class MapPage extends Component {
     render() {
         return (
             <Container style={{flex: 1}}>
-                <Header>
+                {/* <Header>
                     <Left>
                         <Button transparent onPress={() => this.props.navigation.navigate('DrawerOpen')}>
                             <Icon name='menu' />
@@ -99,7 +101,11 @@ class MapPage extends Component {
                     <Right>
                         {!this.state.userLoggedIn && <Text>Log in/Register</Text>}
                     </Right>
-                </Header>
+                </Header> */}
+                <HeaderBar
+                    nav={this.props.navigation}
+                    loggedIn={this.state.userLoggedIn}
+                />
                 <MapView
                     style={styles.container} 
                     initialRegion={{

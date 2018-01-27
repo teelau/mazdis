@@ -1,5 +1,7 @@
 import { LOGIN_SUBMITTED, LOGIN_SUCCESS, LOGIN_FAILURE,
-    LOGIN_CHECKING, LOGIN_CHECKED_LOGGED_IN, LOGIN_CHECKED_NOT_LOGGED_IN, } from '../actions/Login';
+    LOGIN_CHECKING, LOGIN_CHECKED_LOGGED_IN, LOGIN_CHECKED_NOT_LOGGED_IN,
+    LOGOUT_SUBMITTED, LOGOUT_SUCCESS, LOGOUT_FAILURE,
+} from '../actions/Login';
 
 const initialState = {
     email: '',
@@ -38,6 +40,20 @@ export default function loginReducer(state = initialState, action) {
                 loginError: true
             };
 
+        case LOGOUT_SUCCESS:
+            return {
+                ...state,
+                email: '',
+                loginSuccess: false,            
+            };
+        case LOGOUT_FAILURE:
+            return {
+                ...state,
+                loginSubmitted: false,
+                loginError: true,
+            };
+
+        case LOGOUT_SUBMITTED:
         default:
             return state;
     }

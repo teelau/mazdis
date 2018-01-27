@@ -9,6 +9,10 @@ export const LOGIN_CHECKING = 'LOGIN_CHECKING';
 export const LOGIN_CHECKED_LOGGED_IN = 'LOGIN_CHECKED_LOGGED_IN';
 export const LOGIN_CHECKED_NOT_LOGGED_IN = 'LOGIN_CHECKED_NOT_LOGGED_IN';
 
+export const LOGOUT_SUBMITTED = 'LOGOUT_SUBMITTED';
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
+
 export function checkLogin(){
     return (dispatch) => {
         dispatch({type: LOGIN_CHECKING});
@@ -65,5 +69,22 @@ export function loginUser(email, password){
                 payload: error
             });
         })
+    };
+}
+
+export function logoutUser(){
+    return (dispatch) => {
+        dispatch({type: LOGOUT_SUBMITTED});
+        firebase_app.auth().signOut()
+            .then(() => {
+                return dispatch({
+                    type: LOGOUT_SUCCESS,
+                })
+            }).catch((error) => {
+                return dispatch({
+                    type: LOGOUT_FAILURE,
+                    payload: error
+                });
+            })
     };
 }

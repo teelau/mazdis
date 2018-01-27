@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import MapPage from './views/MapPage';
 import LoginPage from './views/LoginPage';
 import AcctPage from './views/AcctPage';
+import LogoutPage from './views/LogoutPage';
 
 import { checkLogin } from './actions/Login';
 
@@ -23,6 +24,7 @@ const UserRouter = DrawerNavigator(
     {
         Map: { screen: MapPage },
         'My Account': { screen: AcctPage },
+        'Log Out': {screen: LogoutPage},
     },
     {
         initialRouteName: 'Map',

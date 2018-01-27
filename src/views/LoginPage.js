@@ -30,6 +30,8 @@ import { getAllSpots } from '../actions/ParkingSpots.js';
 
 import { DEMO_USER } from '../actions/config';
 
+import HeaderBar from '../components/HeaderBar';
+
 class LoginPage extends Component {
     constructor(props) {
         super(props);
