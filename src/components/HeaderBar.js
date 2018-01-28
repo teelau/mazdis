@@ -31,7 +31,7 @@ class HeaderBar extends Component {
                 </Body>
                 <Right>
                     <Button transparent onPress={() => null}>
-                        { !this.props.loggedIn && <Text style={styles.rightSide}>Log in / Register</Text> }
+                        { this.props.loggedIn == false && <Text style={styles.rightSide}>Log in / Register</Text> }
                     </Button> 
                 </Right>
             </Header>

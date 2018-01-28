@@ -32,6 +32,12 @@ export default function loginReducer(state = initialState, action) {
             };
         
         case LOGIN_CHECKED_NOT_LOGGED_IN:
+            return {
+                ...state,
+                loginSubmitted: false,
+                loginSuccess: false,            
+                loginError: false
+            };
         case LOGIN_FAILURE:
             return {
                 ...state,
@@ -44,7 +50,8 @@ export default function loginReducer(state = initialState, action) {
             return {
                 ...state,
                 email: '',
-                loginSuccess: false,            
+                loginSuccess: false,
+                loginError: false,      
             };
         case LOGOUT_FAILURE:
             return {
