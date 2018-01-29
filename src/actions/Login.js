@@ -17,14 +17,25 @@ export function checkLogin(){
     return (dispatch) => {
         dispatch({type: LOGIN_CHECKING});
         firebase_app.auth().onAuthStateChanged((user) => {
-            if(user){
-                // user logged in
-                return dispatch({
-                    type: LOGIN_CHECKED_LOGGED_IN,
-                    payload: {
-                        email: 'blah@blah.com'
-                    }
-                });
+                            
+            if(user){ // user logged in
+                // obtain the token of the user to set
+                firebase_app.auth().currentUser.getIdToken(true)
+                    .then((idToken) => {
+                        return dispatch({
+                            type: LOGIN_CHECKED_LOGGED_IN,
+                            payload: {
+                                email: user.email,
+                                name: user.displayName,
+                                token: idToken,
+                            }
+                        });
+                    }).catch(function(error) {
+                        return dispatch({
+                            type: LOGIN_FAILURE,
+                            payload: error
+                        });
+                    });
             } else {
                 // user not logged in
                 return dispatch({
@@ -40,6 +51,7 @@ export function checkLogin(){
 export function loginUser(email, password){
     return (dispatch) => {
         dispatch({type: LOGIN_SUBMITTED});
+        let userInfoPayload = {};
         firebase_app.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
             .catch((error) => { // catch error with setPersistence
                 return dispatch({
@@ -50,14 +62,6 @@ export function loginUser(email, password){
             .then(() => {
                 return firebase_app.auth().signInWithEmailAndPassword(email, password);
             })
-            .then(() => {
-                return dispatch({
-                    type: LOGIN_SUCCESS,
-                    payload: {
-                        email: email
-                    }
-                });
-            })
             .catch((error) => { // catch error from signInWithEmailAndPassword
                 // var errorCode = error.code;
                 // var errorMessage = error.message;
@@ -66,6 +70,24 @@ export function loginUser(email, password){
                 should dispatch different ones depending on what was the login 
                 problem or at least the error in the payload so we can handle it in 
                 the app */
+                return dispatch({
+                    type: LOGIN_FAILURE,
+                    payload: error
+                });
+            })
+            .then((user) => {
+                userInfoPayload.email = user.email;
+                userInfoPayload.name = user.displayName;
+                return firebase_app.auth().currentUser.getIdToken(true);
+            })
+            .then((idToken) => {
+                userInfoPayload.token = idToken;
+                return dispatch({
+                    type: LOGIN_SUCCESS,
+                    payload: userInfoPayload,
+                });
+            })
+            .catch((error) => { // catch other errors
                 return dispatch({
                     type: LOGIN_FAILURE,
                     payload: error

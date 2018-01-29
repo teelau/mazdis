@@ -5,6 +5,8 @@ import { LOGIN_SUBMITTED, LOGIN_SUCCESS, LOGIN_FAILURE,
 
 const initialState = {
     email: '',
+    token: '',
+    name: '',
     loginSuccess: false,
     loginSubmitted: false,
     loginError: false
@@ -17,6 +19,8 @@ export default function loginReducer(state = initialState, action) {
             return {
                 ...state,
                 email: '',
+                token: '',
+                name: '',
                 loginSubmitted: true,
                 loginSuccess: false           
             };
@@ -34,6 +38,9 @@ export default function loginReducer(state = initialState, action) {
         case LOGIN_CHECKED_NOT_LOGGED_IN:
             return {
                 ...state,
+                email: '',
+                token: '',
+                name: '',
                 loginSubmitted: false,
                 loginSuccess: false,            
                 loginError: false
@@ -50,6 +57,8 @@ export default function loginReducer(state = initialState, action) {
             return {
                 ...state,
                 email: '',
+                token: '',
+                name: '',
                 loginSuccess: false,
                 loginError: false,      
             };
