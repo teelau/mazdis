@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import MapPage from './views/MapPage';
 import LoginPage from './views/LoginPage';
+import RegPage from './views/RegPage';
 import AcctPage from './views/AcctPage';
 import LogoutPage from './views/LogoutPage';
 
@@ -14,6 +15,7 @@ const GuestRouter = DrawerNavigator(
     {
         Map: { screen: MapPage },
         'Log in': { screen: LoginPage },
+        Register: { screen: RegPage },
     },
     {
         initialRouteName: 'Map',
