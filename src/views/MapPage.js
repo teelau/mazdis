@@ -88,7 +88,7 @@ class MapPage extends Component {
 
     render() {
         return (
-            <Container style={{flex: 1}}>
+            <Container style={styles.ScreenContainer}>
                 {/* <Header>
                     <Left>
                         <Button transparent onPress={() => this.props.navigation.navigate('DrawerOpen')}>
@@ -102,68 +102,67 @@ class MapPage extends Component {
                         {!this.state.userLoggedIn && <Text>Log in/Register</Text>}
                     </Right>
                 </Header> */}
-                <HeaderBar
+                {/* <HeaderBar
                     nav={this.props.navigation}
                     loggedIn={this.state.userLoggedIn}
-                />
-                <MapView
-                    style={styles.container} 
-                    initialRegion={{
-                        latitude: 49.2827,
-                        longitude: -123.1207,
-                        latitudeDelta: 0.0922,
-                        longitudeDelta: 0.0421,
-                    }}
+                /> */}
+
+            <MapView
+                style={styles.MapContainer} 
+                initialRegion={{
+                    latitude: 49.2827,
+                    longitude: -123.1207,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421,
+                }}
+            >
+                {
+                    Object.keys(this.state.spotList).map((key, ind) => {
+                        return(<MapView.Marker
+                            key={ind}
+                            title={this.state.spotList[key].title}
+                            coordinate={{
+                                latitude: this.state.spotList[key].lat,
+                                longitude: this.state.spotList[key].lng
+                            }}
+                            onPress={(e) => {
+                                e.id = ind;
+                                this.setState({
+                                    visibleModal: true,
+                                    selectedSpotId: e.id
+                                });
+                            }}
+                        />);
+                    })
+                }
+            </MapView>
+            <View style={styles.underMap}>
+                <Button 
+                    style={styles.buttonStyle}
+                    onPress={this.onPressLogIn}
                 >
-                    {/* <MapView.Marker
-                        title="Me marker"
-                        coordinate={{
-                            latitude: 49.2777,
-                            longitude: -123.1111
-                        }}  
-                    /> */}
-                    {
-                        Object.keys(this.state.spotList).map((key, ind) => {
-                            return(<MapView.Marker
-                                key={ind}
-                                title={this.state.spotList[key].title}
-                                coordinate={{
-                                    latitude: this.state.spotList[key].lat,
-                                    longitude: this.state.spotList[key].lng
-                                }}
-                                onPress={(e) => {
-                                    e.id = ind;
-                                    this.setState({
-                                        visibleModal: true,
-                                        selectedSpotId: e.id
-                                    });
-                                }}
-                            />);
-                        })
-                    }
-                </MapView>
-                <View style={styles.underMap}>
-                    <Button 
-                        style={styles.buttonStyle}
-                        onPress={this.onPressLogIn}
-                    >
-                        <Text>Log in</Text>
-                    </Button>
-                    <Button
-                        style={styles.buttonStyle}
-                        onPress={this.onPressGetSpots}                        
-                    >
-                        <Text>Get Spots</Text>
-                    </Button>
-                </View>
-
-
-                <Modal isVisible={this.state.visibleModal} style={styles.bottomModal}>
+                    <Text>Log in</Text>
+                </Button>
+                <Button
+                    style={styles.buttonStyle}
+                    onPress={this.onPressGetSpots}                        
+                >
+                    <Text>Get Spots</Text>
+                </Button>
+            </View>
+            {/*pop up message*/}
+            <Modal isVisible={this.state.visibleModal} style={styles.bottomModal}>
                 {this._renderModalContent()}
-                </Modal>
-
-
-            </Container>   
+            </Modal>
+            {/*menu button */}
+            <View style={styles.layerMenuButton}>
+                <Button transparent onPress={() => this.props.navigation.navigate('DrawerOpen')}>
+                    <Icon style={styles.menuButton} name='menu' />
+                </Button>                        
+            </View>
+        </Container>
+            
+               
         );
     }
 }
@@ -189,7 +188,11 @@ function mapStateToProps(state) {
 
 
 const styles = StyleSheet.create({
-    container: {
+    ScreenContainer: {
+        zIndex: -1,
+    },
+    MapContainer: {
+        zIndex: -2,
         flex: 3,
         justifyContent: 'center',
         alignItems: 'center',
@@ -213,6 +216,13 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderColor: 'rgba(0, 0, 0, 0.1)',
   },
+  layerMenuButton: {
+      position: 'absolute',
+  },
+  menuButton: {
+      color:'rgba(13,71,161,1)',
+      fontSize:30,
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapPage);

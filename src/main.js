@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { DrawerNavigator } from 'react-navigation';
 import { connect } from 'react-redux';
-
+import { StyleSheet } from 'react-native';
 
 import MapPage from './views/MapPage';
 import LoginPage from './views/LoginPage';
@@ -53,11 +53,11 @@ class Main extends Component {
     render() {
         if (!this.state.loggedIn){
             return (
-                <GuestRouter />
+                <GuestRouter style={styles.layering}/>
             );
         } else {
             return (
-                <UserRouter />
+                <UserRouter style={styles.layering}/>
             );
         }
     }
@@ -78,3 +78,8 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
 
+const styles = StyleSheet.create({
+    layering: {
+        zIndex: 10, 
+    },
+});
