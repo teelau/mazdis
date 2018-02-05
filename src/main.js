@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { DrawerNavigator } from 'react-navigation';
+import { DrawerNavigator, DrawerItems } from 'react-navigation';
 import { connect } from 'react-redux';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
+import { Container, Header, Body, Content} from 'native-base';
 
 import MapPage from './views/MapPage';
 import LoginPage from './views/LoginPage';
@@ -11,6 +12,22 @@ import LogoutPage from './views/LogoutPage';
 
 import { checkLogin } from './actions/Login';
 
+const CustomDrawerComponent = (props) => (
+    <Container>
+        <Header style={styles.drawerHeader}>
+            <Body>
+                <Image 
+                    style={styles.drawerImage}
+                    source={require('./assets/images/mazdis-logo-black.png')}
+                />
+            </Body>
+        </Header>
+        <Content>
+            <DrawerItems {...props} />
+        </Content>
+    </Container>
+)
+
 const GuestRouter = DrawerNavigator(
     {
         Map: { screen: MapPage },
@@ -19,6 +36,7 @@ const GuestRouter = DrawerNavigator(
     },
     {
         initialRouteName: 'Map',
+        contentComponent: CustomDrawerComponent,
     }
 );
 
@@ -30,6 +48,7 @@ const UserRouter = DrawerNavigator(
     },
     {
         initialRouteName: 'Map',
+        contentComponent: CustomDrawerComponent,
     }
 );
 
@@ -81,5 +100,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(Main);
 const styles = StyleSheet.create({
     layering: {
         zIndex: 10, 
+    },
+    drawerHeader: {
+        backgroundColor: '#0D47A1',
+        height: 80,
+    },
+    drawerImage: {
+        height:60,
+        width:60,
     },
 });

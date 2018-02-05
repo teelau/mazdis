@@ -28,6 +28,8 @@ import {
 import { logoutUser } from '../actions/Login.js';
 
 import HeaderBar from '../components/HeaderBar';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
 
 class LogoutPage extends Component {
     constructor(props) {
@@ -45,6 +47,19 @@ class LogoutPage extends Component {
         this.setState({
             loginError: nextProps.loginError,
         });
+    }
+
+    static navigationOptions = {
+        tabBarlabel: 'Log Out',
+        drawerIcon: () => {
+            return(
+                <MaterialIcons 
+                name="exit-to-app" 
+                size={25} 
+                color="#0D47A1"
+              />
+            );
+        }
     }
 
     render() {

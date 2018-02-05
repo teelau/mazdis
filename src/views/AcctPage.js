@@ -25,10 +25,24 @@ import { loginUser } from '../actions/Login.js';
 import { getAllSpots } from '../actions/ParkingSpots.js';
 
 import { DEMO_USER } from '../actions/config';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 class AcctPage extends Component {
     constructor(props) {
         super(props);
+    }
+
+    static navigationOptions = {
+        tabBarlabel: 'My Account',
+        drawerIcon: () => {
+            return(
+                <MaterialIcons 
+                name="info" 
+                size={25} 
+                color="#0D47A1"
+              />
+            );
+        }
     }
 
     render() {

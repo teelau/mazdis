@@ -34,6 +34,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import HeaderBar from '../components/HeaderBar';
 import SingleLineInput from '../components/SingleLineInput';
 import buttonStyling from '../components/Button.js';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 class RegPage extends Component {
     constructor(props) {
@@ -81,6 +82,19 @@ class RegPage extends Component {
 
         if(regInvalid)
             return <Text style={styles.errorText}>{regInvalidMsg}</Text>;
+    }
+
+    static navigationOptions = {
+        tabBarlabel: 'Register',
+        drawerIcon: () => {
+            return(
+                <MaterialIcons 
+                name="person-add" 
+                size={25} 
+                color="#0D47A1"
+              />
+            );
+        }
     }
 
     render() {

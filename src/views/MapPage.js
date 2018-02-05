@@ -8,6 +8,7 @@ import {
     ListView,
     View,
     TouchableOpacity,
+    Image,
 } from 'react-native';
 import { 
     Container,
@@ -29,6 +30,7 @@ import { getAllSpots } from '../actions/ParkingSpots.js';
 import { DEMO_USER } from '../actions/config';
 
 import HeaderBar from '../components/HeaderBar';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 class MapPage extends Component {
     constructor(props) {
@@ -85,6 +87,19 @@ class MapPage extends Component {
             }))}
         </View>
     );
+
+    static navigationOptions = {
+        tabBarlabel: 'Map',
+        drawerIcon: () => {
+            return(
+                <MaterialIcons 
+                name="place" 
+                size={25} 
+                color="#0D47A1"
+              />
+            );
+        }
+    }
 
     render() {
         return (
@@ -157,7 +172,13 @@ class MapPage extends Component {
             {/*menu button */}
             <View style={styles.layerMenuButton}>
                 <Button transparent onPress={() => this.props.navigation.navigate('DrawerOpen')}>
-                    <Icon style={styles.menuButton} name='menu' />
+                    <Icon 
+                        style={{
+                            color:'rgba(13,71,161,1)',
+                            fontSize:30
+                        }} 
+                        name='menu' 
+                    />
                 </Button>                        
             </View>
         </Container>
@@ -219,10 +240,6 @@ const styles = StyleSheet.create({
   layerMenuButton: {
       position: 'absolute',
   },
-  menuButton: {
-      color:'rgba(13,71,161,1)',
-      fontSize:30,
-  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapPage);
