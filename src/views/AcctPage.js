@@ -34,6 +34,7 @@ import {
 import { loginUser } from '../actions/Login';
 
 import HeaderBar from '../components/HeaderBar';
+import UserProfileView from '../components/UserProfileView';
 
 const initialLayout = {
     height: 0,
@@ -43,7 +44,7 @@ const initialLayout = {
 import { DEMO_USER } from '../actions/config';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-const ProfilePage = () => { return <View style={[ styles.container, { backgroundColor: '#ff4081' } ]} /> };
+const ProfilePage = () => { return <UserProfileView /> };
 
 const PasswordPage = () => { return <View style={[ styles.container, { backgroundColor: '#673ab7' } ]} /> };
 

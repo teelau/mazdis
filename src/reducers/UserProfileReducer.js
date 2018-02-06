@@ -1,50 +1,55 @@
-import { PROFILE_UPDATE_SUBMITTED, PROFILE_UPDATE_SUCCESS, PROFILE_UPDATE_INVALID, PROFILE_UPDATE_FAILURE } from '../actions/UserProfile';
+import { UPDATING_USER, UPDATING_USER_SUCCESS, UPDATING_USER_INVALID, UPDATING_USER_FAILURE } from '../actions/CurrentUser';
 
 const initialState = {
-    updateProfileSubmitted: false,
-    updateProfileSuccess: false,
-    updateProfileError: false,
-    updateProfileInvalid: false,
-    updateProfileInvalidMsg: '',
+    updateUserSubmitted: false,
+    updateUserSuccess: false,
+    updateUserError: false,
+    updateUserInvalid: false,
+    updateUserInvalidMsg: '',
 };
 
 
-export default function updateProfileReducer(state = initialState, action) {
+export default function userProfileReducer(state = initialState, action) {
     switch (action.type) {
-    case PROFILE_UPDATE_SUBMITTED:
+    case UPDATING_USER:
         return {
             ...state,
-            updateProfileSubmitted: true,
-            updateProfileSuccess: false,
-            updateProfileError: false,            
-            updateProfileInvalid: false,
-            updateProfileInvalidMsg: '',
+            updateUserSubmitted: true,
+            updateUserSuccess: false,
+            updateUserError: false,            
+            updateUserInvalid: false,
+            updateUserInvalidMsg: '',
         };
 
-    case PROFILE_UPDATE_SUCCESS:
+    case UPDATING_USER_SUCCESS:
         return {
             ...state,
-            updateProfileSuccess: true,
-            updateProfileError: false,            
-            updateProfileInvalid: false,
-            updateProfileInvalidMsg: '',
+            updateUserSubmitted: false,
+            updateUserSuccess: true,
+            updateUserError: false,            
+            updateUserInvalid: false,
+            updateUserInvalidMsg: '',
         };
 
-    case PROFILE_UPDATE_FAILURE:
+    case UPDATING_USER_INVALID:
         return {
             ...state,
-            updateProfileSuccess: false,            
-            updateProfileError: true,
+            updateUserSubmitted: false,
+            updateUserSuccess: false,            
+            updateUserError: false,
+            updateUserInvalid: true,
+            updateUserInvalidMsg: action.payload.message,
         };
-    case PROFILE_UPDATE_INVALID:
+
+    case UPDATING_USER_FAILURE:
         return {
             ...state,
-            updateProfileSubmitted: false,
-            updateProfileSuccess: false,            
-            updateProfileError: false,
-            updateProfileInvalid: true,
-            updateProfileInvalidMsg: action.payload.message,
+            updateUserSubmitted: false,
+            updateUserSuccess: false,
+            updateUserInvalid: false,     
+            updateUserError: true,
         };
+
     default:
         return state;
     }

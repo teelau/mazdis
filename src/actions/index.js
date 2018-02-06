@@ -4,6 +4,7 @@ import { FIREBASE_CONFIG } from './config';
 export const API_ROOT = 'https://us-central1-mazdis-sabps.cloudfunctions.net/api';
 
 export const ENDPOINTS = {
+    userInfo: `${API_ROOT}/user-info`,
     currUser: `${API_ROOT}/users/current-user`,
 };
 
@@ -65,7 +66,7 @@ export function createDispatcherForGet(url, {actionLabel, successLabel, invalidL
                 }
             }).catch((error) => {
                 return dispatch({
-                    type: errorLabel,
+                    type: failureLabel,
                     payload: error,
                 });
             });
@@ -155,7 +156,7 @@ export function createDispatcherForPut(url, body, {actionLabel, successLabel, in
                 }
             }).then((responseJson) => {
                 if(responseJson.message) {
-                    // POST request validation error
+                    // PUT request validation error
                     return dispatch({
                         type: invalidLabel,
                         payload: {
@@ -163,7 +164,7 @@ export function createDispatcherForPut(url, body, {actionLabel, successLabel, in
                         },
                     });
                 } else {
-                    // successful POST request
+                    // successful PUT request
                     return dispatch({
                         type: successLabel,
                         payload: responseJsonFunc ?
