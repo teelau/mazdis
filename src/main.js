@@ -9,8 +9,11 @@ import LoginPage from './views/LoginPage';
 import RegPage from './views/RegPage';
 import AcctPage from './views/AcctPage';
 import LogoutPage from './views/LogoutPage';
+import SpotDetail from './views/SpotDetail';
 
 import { checkLogin } from './actions/Login';
+
+const Hidden = () => null;
 
 const CustomDrawerComponent = (props) => (
     <Container>
@@ -26,13 +29,16 @@ const CustomDrawerComponent = (props) => (
             <DrawerItems {...props} />
         </Content>
     </Container>
-)
+);
 
 const GuestRouter = DrawerNavigator(
     {
         Map: { screen: MapPage },
         'Log in': { screen: LoginPage },
         Register: { screen: RegPage },
+        'Spot Detail': { screen: SpotDetail, navigationOptions:
+            { drawerLabel: <Hidden />}
+        },
     },
     {
         initialRouteName: 'Map',
@@ -45,6 +51,9 @@ const UserRouter = DrawerNavigator(
         Map: { screen: MapPage },
         'My Account': { screen: AcctPage },
         'Log Out': {screen: LogoutPage},
+        'Spot Detail': { screen: SpotDetail, navigationOptions:
+            { drawerLabel: <Hidden />}
+        },
     },
     {
         initialRouteName: 'Map',

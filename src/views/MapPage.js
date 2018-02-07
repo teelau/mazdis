@@ -199,7 +199,7 @@ class MapPage extends Component {
                     onBackdropPress={() => this.setState({visibleModal: false, selectedSpotId: -1 })}>
                     {this.state.selectedSpotId !== -1 ? this.renderModalContent(this.props.spotList[this.state.selectedSpotId]) : null}
                 </Modal>
-                
+
                 {/*menu button */}
                 <View style={styles.layerMenuButton}>
                     <Button transparent onPress={() => this.props.navigation.navigate('DrawerOpen')}>
@@ -226,7 +226,7 @@ class MapPage extends Component {
                 <Text>{ `id: ${id}` }</Text>
                 <Button 
                     style={styles.getDetailButton} block
-                    // onPress={() => press handler}
+                    onPress={() => this.props.navigation.navigate('Spot Detail', { ...spot })}
                 >
                     <Text style={styles.buttonText}>Get Details</Text>
                 </Button>
@@ -308,6 +308,7 @@ const styles = StyleSheet.create({
     },
     layerMenuButton: {
         position: 'absolute',
+        marginTop: 20,
     },
     nameTitle: {
         fontSize: 36,
