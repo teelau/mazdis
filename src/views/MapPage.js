@@ -186,6 +186,7 @@ class MapPage extends Component {
         return(
             <Container style={styles.ScreenContainer}>
                 <MapView
+                    showsCompass={false}
                     initialRegion={mapOptions}
                     region={mapOptions}
                     style={styles.MapContainer} 
