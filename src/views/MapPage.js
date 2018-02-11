@@ -309,7 +309,7 @@ const styles = StyleSheet.create({
     },
     layerMenuButton: {
         position: 'absolute',
-        marginTop: 20,
+        marginTop: Platform.OS === 'ios' ? 20 : 0,
     },
     nameTitle: {
         fontSize: 36,
