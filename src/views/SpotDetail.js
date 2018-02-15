@@ -21,6 +21,8 @@ import {
 
 import MapView from 'react-native-maps';
 
+import { reserveSpot, resetReservation } from '../actions/Reservation';
+
 import { cardStyles } from '../components/CardStyles';
 import { listStyles } from '../components/ListStyles';
 import HeaderBar from '../components/HeaderBar';
@@ -32,6 +34,10 @@ class SpotDetail extends Component {
     constructor(props){
         super(props);
         this.renderTitleSection = this.renderTitleSection.bind(this);
+    }
+
+    componentWillMount() {
+        this.props.resetReservation();
     }
 
     renderTitleSection(spot) {
@@ -168,6 +174,9 @@ const styles = StyleSheet.create({
 
 function mapDispatchToProps(dispatch) {
     return {
+        resetReservation: () => {
+            dispatch(resetReservation());
+        },
     };
 }
 

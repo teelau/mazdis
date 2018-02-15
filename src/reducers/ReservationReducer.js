@@ -3,6 +3,7 @@ import {
     FETCHING_RES_SUCCESS,
     FETCHING_RES_INVALID,
     FETCHING_RES_FAILURE,
+    RES_RESET,
     RES_SUBMITTED,
     RES_SUCCESS,
     RES_INVALID,
@@ -15,7 +16,7 @@ const initialState = {
     resError: false,
     resInvalid: false,
     resInvalidMsg: '',
-    resSpotDetail: {},
+    resDetail: {},
 
     resFetching: false,
     resFetchSuccess: false,
@@ -26,6 +27,16 @@ const initialState = {
 
 export default function reservationReducer(state = initialState, action) {
     switch (action.type) {
+    case RES_RESET:
+        return {
+            resSubmitted: false,
+            resSuccess: false,
+            resError: false,
+            resInvalid: false,
+            resInvalidMsg: '',
+            resDetail: {},
+        };
+
     case RES_SUBMITTED:
         return {
             ...state,

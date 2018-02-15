@@ -21,7 +21,7 @@ import {
 
 import MapView from 'react-native-maps';
 
-import { reserveSpot } from '../actions/Reservation';
+import { reserveSpot, resetReservation } from '../actions/Reservation';
 
 import { cardStyles } from '../components/CardStyles';
 import { listStyles } from '../components/ListStyles';

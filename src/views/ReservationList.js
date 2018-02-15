@@ -162,7 +162,7 @@ class ReservationList extends Component {
     }
 
     render() {
-        console.log(this.props.resList.currentBooking);
+        // console.log(this.props.resList.currentBooking);
         return (
             <Container style={{flex: 1}}>
                 <HeaderBar
