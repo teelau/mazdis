@@ -26,13 +26,12 @@ import Modal from 'react-native-modal';
 
 import { loginUser } from '../actions/Login.js';
 import { getAllSpots } from '../actions/ParkingSpots.js';
-
-import { DEMO_USER } from '../actions/config';
+import { reserveSpot } from '../actions/Reservation';
 
 import HeaderBar from '../components/HeaderBar';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-class MapPage extends Component {
+class SpotList extends Component {
     constructor(props) {
         super(props);
 
@@ -41,12 +40,9 @@ class MapPage extends Component {
 
         this.onPressLogIn = this.onPressLogIn.bind(this);               
         this.onPressGetSpots = this.onPressGetSpots.bind(this);
-        this.markerOnPress = this.markerOnPress.bind(this);
-        this.mapOnRegionChangeComplete = this.mapOnRegionChangeComplete.bind(this);
         this.refreshLocation = this.refreshLocation.bind(this);
         this.setUserPosition = this.setUserPosition.bind(this);
         this.setUserPositionError = this.setUserPositionError.bind(this);
-        this.renderMap = this.renderMap.bind(this);
         // var spotsDs = new ListView.DataSource({rowHasChanged: (r1, r2) => {r1 !== r2}});
         // this.state = {
         //     spotList: {},
@@ -137,127 +133,42 @@ class MapPage extends Component {
         this.props.getAllSpots();
     }
 
-    mapOnRegionChangeComplete(region){
-        this.latitudeDelta = region.latitudeDelta;
-        this.longitudeDelta = region.longitudeDelta;
-    }
-
-    renderMarker(spot, ind) {
-        return(
-            <MapView.Marker
-                key={ind}
-                coordinate={{
-                    latitude: spot.lat,
-                    longitude: spot.lng
-                }}
-                onPress={(e) => this.markerOnPress(ind, e)}>
-            </MapView.Marker>
-        );
-    }
-
-    renderLoadingView() {
-        return (
-            <Container style={{flex: 1}}>
-                <HeaderBar nav={this.props.navigation} />
-                <Text>
-                    Loading...
-                </Text>
-            </Container>
-        );
-    }
-
-    markerOnPress(ind, e) {
-        this.setState({
-            visibleModal: true,
-            selectedSpotId: ind,
-            selectedLat: this.props.spotList[ind].lat,
-            selectedLon: this.props.spotList[ind].lng,
-        });
-    }
-
-    renderMap() {
-        let mapOptions = {
-            latitude: this.state.selectedLat,
-            longitude: this.state.selectedLon,
-            latitudeDelta: this.latitudeDelta,
-            longitudeDelta: this.longitudeDelta,
-        };
-
-        return(
-            <Container style={styles.ScreenContainer}>
-                <MapView
-                    showsCompass={false}
-                    initialRegion={mapOptions}
-                    region={mapOptions}
-                    style={styles.MapContainer} 
-                    onRegionChangeComplete={region => this.mapOnRegionChangeComplete(region)}>
-                    { this.props.spotList.map((spot, ind) => this.renderMarker(spot, ind)) }
-                </MapView>
-
-                {/*pop up message*/}
-                <Modal isVisible={this.state.visibleModal} backdropOpacity={0}
-                    style={styles.bottomModal} 
-                    onBackdropPress={() => this.setState({visibleModal: false, selectedSpotId: -1 })}>
-                    {this.state.selectedSpotId !== -1 ? this.renderModalContent(this.props.spotList[this.state.selectedSpotId]) : null}
-                </Modal>
-
-                {/*menu button */}
-                <View style={styles.layerMenuButton}>
-                    <Button transparent onPress={() => this.props.navigation.navigate('DrawerOpen')}>
-                        <Icon 
-                            style={{
-                                color:'rgba(13,71,161,1)',
-                                fontSize:30
-                            }} 
-                            name='menu' 
-                        />
-                    </Button>   
-                </View>                     
-            </Container>
-        ); 
-    }
-
-    renderModalContent(spot) {
+    renderListContent(spot) {
         const { title, address, city, availability, availableSpots, id } = spot;
         const addressString = `${address}, ${city}`;
         return (
-            <View style={styles.modalContent}>
+            <View>
                 <Text style={styles.nameTitle}>{ title }</Text>
                 <Text>{ addressString }</Text>
-                {/* <Text>{ `id: ${id}` }</Text> */}
-                <Button 
-                    style={styles.getDetailButton} block
-                    onPress={() => this.props.navigation.navigate('Spot Detail', { ...spot })}
-                >
-                    <Text style={styles.buttonText}> Get Details / Reserve </Text>
-                </Button>
-                {/* TODO: Add Get Directions Function */}
-                {/* <Button 
-                    style={styles.getDirectionButton} block
-                    // onPress={() => direction handler}
-                >
-                    <Text style={styles.buttonText}>Get Directions</Text>
-                </Button> */}
+                <Text>{ `id: ${id}` }</Text>
             </View>
         )
     };
 
-    static navigationOptions = {
-        tabBarlabel: 'Map',
-        drawerIcon: () => {
-            return(
-                <MaterialIcons 
-                name="place" 
-                size={25} 
-                color="#0D47A1"
-              />
-            );
-        }
-    }
+    // TODO: remove comment to show icon once page is finished
+    // static navigationOptions = {
+    //     tabBarlabel: 'Parking Spot List',
+    //     drawerIcon: () => {
+    //         return(
+    //             <MaterialIcons 
+    //             name="list" 
+    //             size={25} 
+    //             color="#0D47A1"
+    //           />
+    //         );
+    //     }
+    // }
 
     render() {
         return (
-                this.state.locnLoading || !this.props.spotsFetched ? this.renderLoadingView() : this.renderMap()
+            <Container style={{flex: 1}}>
+                <HeaderBar
+                    nav={this.props.navigation}
+                />
+                <View>
+                    <Text> Spot List </Text>
+                </View>
+            </Container>
         );
     }
 }
@@ -343,4 +254,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MapPage);
+export default connect(mapStateToProps, mapDispatchToProps)(SpotList);

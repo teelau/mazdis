@@ -38,6 +38,7 @@ import { DEMO_USER } from '../actions/config';
 import HeaderBar from '../components/HeaderBar';
 import SingleLineInput from '../components/SingleLineInput';
 import buttonStyling from '../components/Button.js';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 class LoginPage extends Component {
     constructor(props) {
@@ -93,6 +94,20 @@ class LoginPage extends Component {
             return <Text style={styles.errorText}>Login Error!</Text> 
         } else if(loginBadCred) {
             return <Text style={styles.errorText}>Invalid Credentials</Text>
+        }
+    }
+
+
+    static navigationOptions = {
+        tabBarlabel: 'Log In',
+        drawerIcon: () => {
+            return(
+                <MaterialIcons 
+                name="person" 
+                size={25} 
+                color="#0D47A1"
+              />
+            );
         }
     }
 

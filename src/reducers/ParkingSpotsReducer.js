@@ -4,7 +4,8 @@ const initialState = {
     spots: {},
     spotsFetching: false,
     spotsFetched: false,    
-    spotsFetchError: false
+    spotsFetchError: false,
+    spotsFetchErrorMsg: '',
 };
 
 export default function spotsReducer(state = initialState, action) {
@@ -31,7 +32,8 @@ export default function spotsReducer(state = initialState, action) {
             ...state,
             spotsFetching: false,
             spotsFetched: false,
-            spotsFetchError: true
+            spotsFetchError: true,
+            spotsFetchErrorMsg: action.payload,
         };
     default:
         return state;

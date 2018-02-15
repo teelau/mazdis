@@ -18,7 +18,10 @@ const validation = {
             errors.confirmPassword = 'Password does not match';
         }      
         return errors;
-    }
+    },
+    noSpaces: value => value && !/^\S*$/i.test(value) ? 'No spaces please' : undefined,
+    postalOrZip: value => 
+        value && !/(^\d{5}(-\d{4})?$)|(^[ABCEGHJKLMNPRSTVXY]{1}\d{1}[A-Z]{1} *\d{1}[A-Z]{1}\d{1}$)/i.test(value) ? 'Invalid Postal/Zip code' : undefined,
 };
   
 export const normalizePhone = (value) => {

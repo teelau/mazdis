@@ -7,6 +7,7 @@ import {
     Text,
     ListView,
     View,
+    Dimensions,
 } from 'react-native';
 import { 
     Container,
@@ -19,56 +20,114 @@ import {
     Footer,
     Button,
     Icon,
+    Form,
+    Item,
+    Input,
+    Label,
 } from 'native-base';
+import {
+    TabViewAnimated,
+    TabBar,
+    SceneMap,
+} from 'react-native-tab-view';
 
-import { loginUser } from '../actions/Login.js';
-import { getAllSpots } from '../actions/ParkingSpots.js';
+import { loginUser } from '../actions/Login';
+
+import HeaderBar from '../components/HeaderBar';
+import UserProfileView from '../components/UserProfileView';
+
+const initialLayout = {
+    height: 0,
+    width: Dimensions.get('window').width,
+};
 
 import { DEMO_USER } from '../actions/config';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
+const ProfilePage = () => { return <UserProfileView /> };
+
+const PasswordPage = () => { return <View style={[ styles.container, { backgroundColor: '#673ab7' } ]} /> };
 
 class AcctPage extends Component {
+    state = {
+        index: 0,
+        routes: [
+            { key: 'profile', title: 'Profile' },
+            { key: 'password', title: 'Password' },
+        ],
+    }
+
     constructor(props) {
         super(props);
     }
 
+    static navigationOptions = {
+        tabBarlabel: 'My Account',
+        drawerIcon: () => {
+            return(
+                <MaterialIcons 
+                name="info" 
+                size={25} 
+                color="#0D47A1"
+              />
+            );
+        }
+    }
+
+    componentWillReceiveProps(nextProps){
+        this.setState({
+            loginError: nextProps.loginError,
+            loginBadCred: nextProps.loginBadCred,
+        });
+    }
+
+    _handleIndexChange = index => this.setState({ index });
+
+    _renderHeader = props => <TabBar {...props} />;
+
+    _renderScene = SceneMap({
+        profile: ProfilePage,
+        password: PasswordPage,
+      });
+
     render() {
         return (
             <Container style={{flex: 1}}>
-                <Header>
-                    <Left>
-                        <Button transparent onPress={() => this.props.navigation.navigate('DrawerOpen')}>
-                            <Icon name='menu' />
-                        </Button>                        
-                    </Left>
-                    <Body>
-                        <Title>Mazdis</Title>
-                    </Body>
-                    <Right />
-                </Header>
-                <View>
-                    <Text>Account Info Page</Text>
-                </View>
+                <HeaderBar nav={this.props.navigation} />
+                <TabViewAnimated
+                    style={styles.container}
+                    navigationState={this.state}
+                    renderScene={this._renderScene}
+                    renderHeader={this._renderHeader}
+                    onIndexChange={this._handleIndexChange}
+                    initialLayout={initialLayout}
+                />
             </Container>
         );
-    }
+    };
 }
+
+function mapDispatchToProps(dispatch) {
+    return {
+    };
+}
+
+function mapStateToProps(state) {
+    return {
+    };
+}
+
 const styles = StyleSheet.create({
-    container: {
+    loginButton: {
+        flex: 1,
+        flexDirection: 'column',
+    },
+    formLabel: {
+        flex: 1,
+    },
+    formInput: {
         flex: 3,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    underMap: {
-        flex: 1,        
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    buttonStyle: {
-        marginTop: 5,
-        marginLeft: 5,
-        marginRight: 5,
     }
 });
 
-export default AcctPage;
+export default connect(mapStateToProps, mapDispatchToProps)(AcctPage);
