@@ -91,6 +91,7 @@ class ReserveSpot extends Component {
     render(){
         const { params } = this.props.navigation.state;
         let spot = params;
+        this.props.resSuccess && this.props.navigation.navigate('My Reservations');
         return(
             <Container style={{flex: 1}}>
                 <HeaderBar nav={this.props.navigation} />
