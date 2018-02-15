@@ -92,11 +92,12 @@ class SpotDetail extends Component {
                     />      
                 </MapView>
                 <CardItem style={cardStyles.cardItemStyle}>
-                    <Button 
+                    {/* TODO: Add Get Directions Function */}
+                    {/* <Button 
                         style={styles.getDirectionButton} block
                         onPress={() => { console.log("Get directions pressed") }}>
                         <Text style={styles.buttonText}>Get Directions</Text>
-                    </Button>
+                    </Button> */}
                 </CardItem>
             </Card>
         );

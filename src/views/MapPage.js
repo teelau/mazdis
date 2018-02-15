@@ -224,19 +224,20 @@ class MapPage extends Component {
             <View style={styles.modalContent}>
                 <Text style={styles.nameTitle}>{ title }</Text>
                 <Text>{ addressString }</Text>
-                <Text>{ `id: ${id}` }</Text>
+                {/* <Text>{ `id: ${id}` }</Text> */}
                 <Button 
                     style={styles.getDetailButton} block
                     onPress={() => this.props.navigation.navigate('Spot Detail', { ...spot })}
                 >
                     <Text style={styles.buttonText}> Get Details / Reserve </Text>
                 </Button>
-                <Button 
+                {/* TODO: Add Get Directions Function */}
+                {/* <Button 
                     style={styles.getDirectionButton} block
                     // onPress={() => direction handler}
                 >
                     <Text style={styles.buttonText}>Get Directions</Text>
-                </Button>
+                </Button> */}
             </View>
         )
     };
