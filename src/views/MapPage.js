@@ -142,7 +142,7 @@ class MapPage extends Component {
         this.longitudeDelta = region.longitudeDelta;
     }
 
-    renderMarker(spot, spotId, ind) {
+    renderMarker(spot, ind) {
         return(
             <MapView.Marker
                 key={ind}
@@ -150,7 +150,7 @@ class MapPage extends Component {
                     latitude: spot.lat,
                     longitude: spot.lng
                 }}
-                onPress={(e) => this.markerOnPress(spotId, e)}>
+                onPress={(e) => this.markerOnPress(ind, e)}>
             </MapView.Marker>
         );
     }
@@ -166,12 +166,12 @@ class MapPage extends Component {
         );
     }
 
-    markerOnPress(spotId, e) {
+    markerOnPress(ind, e) {
         this.setState({
             visibleModal: true,
-            selectedSpotId: spotId,
-            selectedLat: this.props.spotList[spotId].lat,
-            selectedLon: this.props.spotList[spotId].lng,
+            selectedSpotId: ind,
+            selectedLat: this.props.spotList[ind].lat,
+            selectedLon: this.props.spotList[ind].lng,
         });
     }
 
@@ -191,7 +191,7 @@ class MapPage extends Component {
                     region={mapOptions}
                     style={styles.MapContainer} 
                     onRegionChangeComplete={region => this.mapOnRegionChangeComplete(region)}>
-                    { Object.keys(this.props.spotList).map((spot, ind) => this.renderMarker(this.props.spotList[spot], spot, ind)) }
+                    { this.props.spotList.map((spot, ind) => this.renderMarker(spot, ind)) }
                 </MapView>
 
                 {/*pop up message*/}

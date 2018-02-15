@@ -53,12 +53,15 @@ class SpotDetail extends Component {
                     </Body>
                 </CardItem>
                 <CardItem style={styles.cardItemStyle}>
-                    <Button
+                    {
+                        !this.props.loggedIn && <Text> You must be logged in to reserve this spot! </Text>
+                    }
+                    { this.props.loggedIn && <Button
                         style={styles.reserveButton}
                         onPress={() => this.props.navigation.navigate('Reserve Spot', { ...spot })}
                     >
                         <Text style={styles.buttonText}> Reserve </Text>
-                    </Button>
+                    </Button> }
                 </CardItem>
                 <CardItem>
                     <Text> The reservation will be valid for 30 minutes  </Text>
@@ -169,6 +172,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
+        loggedIn: state.loginReducer.loginSuccess,
     };
 }
 

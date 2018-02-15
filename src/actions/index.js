@@ -7,6 +7,7 @@ export const ENDPOINTS = {
     userInfo: `${API_ROOT}/user-info`,
     currUser: `${API_ROOT}/users/current-user`,
     bookings: `${API_ROOT}/bookings`,
+    parkingSpots: `${API_ROOT}/parking-stations`,
 };
 
 export var firebase_app = firebase.initializeApp(FIREBASE_CONFIG);
