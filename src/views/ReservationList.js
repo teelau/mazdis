@@ -31,6 +31,7 @@ import moment from 'moment';
 import Modal from 'react-native-modal';
 
 import { fetchReservations } from '../actions/Reservation';
+import { parkBike, retrieveBike } from '../actions/index'
 
 import { cardStyles } from '../components/CardStyles';
 import { listStyles } from '../components/ListStyles';
@@ -76,6 +77,21 @@ class ReservationList extends Component {
                     <Text>
                         Book time: {moment(bookTime).format("ddd, MMM. D, h:mm a")}{"\n"}
                     </Text>
+                </CardItem>
+                <CardItem>
+                    <Button 
+                        style={styles.getDirectionButton} block
+                        onPress={() => { parkBike(code) }}>
+                        <Text style={styles.buttonText}>Park Bike</Text>
+                    </Button>
+                    <Text>
+                        {"   "}
+                    </Text>
+                    <Button 
+                        style={styles.getDirectionButton} block
+                        onPress={() => { retrieveBike(code) }}>
+                        <Text style={styles.buttonText}>Retrieve Bike</Text>
+                    </Button>
                 </CardItem>
             </Card>
         );

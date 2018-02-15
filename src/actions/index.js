@@ -6,6 +6,7 @@ export const API_ROOT = 'https://us-central1-mazdis-sabps.cloudfunctions.net/api
 export const ENDPOINTS = {
     userInfo: `${API_ROOT}/user-info`,
     currUser: `${API_ROOT}/users/current-user`,
+    booking: `${API_ROOT}/booking`,
     bookings: `${API_ROOT}/bookings`,
     parkingSpots: `${API_ROOT}/parking-stations`,
 };
@@ -21,6 +22,48 @@ export function getAuth(auth) {
     } else {
         return Promise.resolve('');
     }
+}
+
+/*
+    Test Function for parking bike
+*/
+export function parkBike(bookingCode){
+    fetch(ENDPOINTS.booking, {
+        method: 'PUT',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            action: 'park',
+            bookingCode,
+        }),
+    })
+        .then((response) => {
+            console.log('Park Bike Status: ', response.status);
+        })
+        .catch((error) => { console.log(error)} );
+}
+
+/*
+    Test Function for retrieving bike
+*/
+export function retrieveBike(bookingCode){
+    fetch(ENDPOINTS.booking, {
+        method: 'PUT',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            action: 'retrieve',
+            bookingCode,
+        }),
+    })
+        .then((response) => {
+            console.log('Retrieve Bike Status: ', response.status);
+        })
+        .catch((error) => { console.log(error)} );
 }
 
 export function createDispatcherForGet(url, {actionLabel, successLabel, invalidLabel, failureLabel }, options = {}){
