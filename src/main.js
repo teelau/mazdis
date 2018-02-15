@@ -10,6 +10,7 @@ import RegPage from './views/RegPage';
 import AcctPage from './views/AcctPage';
 import LogoutPage from './views/LogoutPage';
 import SpotDetail from './views/SpotDetail';
+import SpotList from './views/SpotList';
 
 import { checkLogin } from './actions/Login';
 
@@ -34,6 +35,9 @@ const CustomDrawerComponent = (props) => (
 const GuestRouter = DrawerNavigator(
     {
         Map: { screen: MapPage },
+        'Parking Spot List': { screen: SpotList, navigationOptions:
+            { drawerLabel: <Hidden />},
+        },
         'Log in': { screen: LoginPage },
         Register: { screen: RegPage },
         'Spot Detail': { screen: SpotDetail, navigationOptions:
@@ -49,6 +53,9 @@ const GuestRouter = DrawerNavigator(
 const UserRouter = DrawerNavigator(
     {
         Map: { screen: MapPage },
+        'Parking Spot List': { screen: SpotList, navigationOptions:
+            { drawerLabel: <Hidden />}
+        },
         'My Account': { screen: AcctPage },
         'Log Out': {screen: LogoutPage},
         'Spot Detail': { screen: SpotDetail, navigationOptions:

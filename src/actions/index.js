@@ -6,6 +6,7 @@ export const API_ROOT = 'https://us-central1-mazdis-sabps.cloudfunctions.net/api
 export const ENDPOINTS = {
     userInfo: `${API_ROOT}/user-info`,
     currUser: `${API_ROOT}/users/current-user`,
+    bookings: `${API_ROOT}/bookings`,
 };
 
 export var firebase_app = firebase.initializeApp(FIREBASE_CONFIG);
