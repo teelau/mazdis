@@ -41,7 +41,9 @@ export function createDispatcherForGet(url, {actionLabel, successLabel, invalidL
                     headers: reqHeaders,
                 });
             }).then((response) => {            
-                if(response.status == 200 || response.status == 500){
+                if(response.status == 200 ||
+                    (response.status >= 400 && response.status <= 499) ||
+                    response.status == 500){
                 // TODO: api currently returns HTTP 500 for invalid registration, should be changed to 4xx.
                     return response.json();
                 } else { // Reserved for offline or unknown errors, typically HTTP 500
@@ -95,8 +97,9 @@ export function createDispatcherForPost(url, body, {actionLabel, successLabel, i
                     body: JSON.stringify(body),
                 });
             }).then((response) => {            
-                if(response.status == 200 || response.status == 500){
-                // TODO: api currently returns HTTP 500 for invalid registration, should be changed to 4xx.
+                if(response.status == 200 ||
+                    (response.status >= 400 && response.status <= 499) ||
+                    response.status == 500){                // TODO: api currently returns HTTP 500 for invalid registration, should be changed to 4xx.
                     return response.json();
                 } else { // Reserved for offline or unknown errors, typically HTTP 500
                     return new Promise.reject({error: response});
@@ -149,8 +152,9 @@ export function createDispatcherForPut(url, body, {actionLabel, successLabel, in
                     body: JSON.stringify(body),
                 });
             }).then((response) => {            
-                if(response.status == 200 || response.status == 500){
-                // TODO: api currently returns HTTP 500 for invalid registration, should be changed to 4xx.
+                if(response.status == 200 ||
+                    (response.status >= 400 && response.status <= 499) ||
+                    response.status == 500){                // TODO: api currently returns HTTP 500 for invalid registration, should be changed to 4xx.
                     return response.json();
                 } else { // Reserved for offline or unknown errors, typically HTTP 500
                     return new Promise.reject({error: response});

@@ -49,8 +49,7 @@ class SpotDetail extends Component {
                 </CardItem>
                 <CardItem>
                     <Body>
-                        <Text style={styles.addressLabel}> {address} </Text>
-                        <Text style={styles.addressLabel}> {city} </Text>
+                        <Text style={styles.addressLabel}> {address}, {city} </Text>
                     </Body>
                 </CardItem>
                 <CardItem style={styles.cardItemStyle}>
@@ -89,7 +88,7 @@ class SpotDetail extends Component {
                         }}
                     />      
                 </MapView>
-                <CardItem style={cardStyles.titleCardItem}>
+                <CardItem style={cardStyles.cardItemStyle}>
                     <Button 
                         style={styles.getDirectionButton} block
                         onPress={() => { console.log("Get directions pressed") }}>

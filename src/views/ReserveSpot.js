@@ -21,6 +21,8 @@ import {
 
 import MapView from 'react-native-maps';
 
+import { reserveSpot } from '../actions/Reservation';
+
 import { cardStyles } from '../components/CardStyles';
 import { listStyles } from '../components/ListStyles';
 import HeaderBar from '../components/HeaderBar';
@@ -31,7 +33,16 @@ class ReserveSpot extends Component {
 
     constructor(props){
         super(props);
+        this.renderResError = this.renderResError.bind(this);
         this.renderTitleSection = this.renderTitleSection.bind(this);
+    }
+
+    renderResError() {
+        const { resInvalid, resInvalidMsg } = this.props;
+
+        if(resInvalid) {
+            return <Text style={styles.errorText}>{resInvalidMsg}</Text>;
+        }
     }
 
     renderTitleSection(spot) {
@@ -56,9 +67,12 @@ class ReserveSpot extends Component {
                 <CardItem style={styles.cardItemStyle}>
                     <Button
                         style={styles.reserveButton}
-                        onPress={() => { console.log("Reserve Button Pressed") }}>
+                        onPress={() => { this.props.reserveSpot(id) }}>
                         <Text style={styles.buttonText}> Confirm Reservation </Text>
                     </Button>
+                </CardItem>
+                <CardItem>
+                    { this.renderResError() }
                 </CardItem>
                 <CardItem style={styles.cardItemStyle}>
                     <Button 
@@ -75,7 +89,6 @@ class ReserveSpot extends Component {
 
 
     render(){
-        console.log(this.props);
         const { params } = this.props.navigation.state;
         let spot = params;
         return(
@@ -134,16 +147,28 @@ const styles = StyleSheet.create({
     cardItemStyle: {
         justifyContent: 'center',
     },
+    errorText: {
+        color: 'red'
+    },
 });
 
 
 function mapDispatchToProps(dispatch) {
     return {
+        reserveSpot: (stationId) => {
+            dispatch(reserveSpot(stationId));
+        },
     };
 }
 
 function mapStateToProps(state) {
-    return {
+    return {            
+        resSubmitted: state.reservationReducer.resSubmitted,
+        resSuccess: state.reservationReducer.resSuccess,
+        resError: state.reservationReducer.resError,            
+        resInvalid: state.reservationReducer.resInvalid,
+        resInvalidMsg: state.reservationReducer.resInvalidMsg,
+        resDetail: state.reservationReducer.resDetail,
     };
 }
 
