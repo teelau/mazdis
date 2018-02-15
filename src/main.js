@@ -11,6 +11,7 @@ import AcctPage from './views/AcctPage';
 import LogoutPage from './views/LogoutPage';
 import SpotDetail from './views/SpotDetail';
 import SpotList from './views/SpotList';
+import ReservationList from './views/ReservationList';
 import ReserveSpot from './views/ReserveSpot';
 
 import { checkLogin } from './actions/Login';
@@ -60,6 +61,7 @@ const UserRouter = DrawerNavigator(
         'Parking Spot List': { screen: SpotList, navigationOptions:
             { drawerLabel: <Hidden />}
         },
+        'My Reservations': { screen: ReservationList },
         'My Account': { screen: AcctPage },
         'Log Out': {screen: LogoutPage},
         'Spot Detail': { screen: SpotDetail, navigationOptions:

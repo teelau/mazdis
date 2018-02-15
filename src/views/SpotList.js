@@ -26,8 +26,7 @@ import Modal from 'react-native-modal';
 
 import { loginUser } from '../actions/Login.js';
 import { getAllSpots } from '../actions/ParkingSpots.js';
-
-import { DEMO_USER } from '../actions/config';
+import { reserveSpot } from '../actions/Reservation';
 
 import HeaderBar from '../components/HeaderBar';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';

@@ -21,7 +21,7 @@ const initialState = {
     resFetchSuccess: false,
     resFetchInvalid: false,
     resFetchError: false,   
-    resList: [],
+    resList: {},
 };
 
 export default function reservationReducer(state = initialState, action) {
@@ -83,7 +83,7 @@ export default function reservationReducer(state = initialState, action) {
             resFetchSuccess: true,
             resFetchInvalid: false,
             resFetchError: false,
-            resList: [],
+            resList: action.payload,
         };
 
     case FETCHING_RES_INVALID:

@@ -14,63 +14,63 @@ const initialState = {
 
 export default function loginReducer(state = initialState, action) {
     switch (action.type) {
-        case LOGIN_CHECKING:
-        case LOGIN_SUBMITTED:
-            return {
-                ...state,
-                email: '',
-                token: '',
-                name: '',
-                loginSubmitted: true,
-                loginSuccess: false           
-            };
+    case LOGIN_CHECKING:
+    case LOGIN_SUBMITTED:
+        return {
+            ...state,
+            email: '',
+            token: '',
+            name: '',
+            loginSubmitted: true,
+            loginSuccess: false           
+        };
 
-        case LOGIN_CHECKED_LOGGED_IN:
-        case LOGIN_SUCCESS:
-            return {
-                ...state,
-                loginSubmitted: false,
-                loginSuccess: true,
-                loginError: false,            
-                email: action.payload.email
-            };
-        
-        case LOGIN_CHECKED_NOT_LOGGED_IN:
-            return {
-                ...state,
-                email: '',
-                token: '',
-                name: '',
-                loginSubmitted: false,
-                loginSuccess: false,            
-                loginError: false
-            };
-        case LOGIN_FAILURE:
-            return {
-                ...state,
-                loginSubmitted: false,
-                loginSuccess: false,            
-                loginError: true
-            };
+    case LOGIN_CHECKED_LOGGED_IN:
+    case LOGIN_SUCCESS:
+        return {
+            ...state,
+            loginSubmitted: false,
+            loginSuccess: true,
+            loginError: false,            
+            email: action.payload.email
+        };
+    
+    case LOGIN_CHECKED_NOT_LOGGED_IN:
+        return {
+            ...state,
+            email: '',
+            token: '',
+            name: '',
+            loginSubmitted: false,
+            loginSuccess: false,            
+            loginError: false
+        };
+    case LOGIN_FAILURE:
+        return {
+            ...state,
+            loginSubmitted: false,
+            loginSuccess: false,            
+            loginError: true
+        };
 
-        case LOGOUT_SUCCESS:
-            return {
-                ...state,
-                email: '',
-                token: '',
-                name: '',
-                loginSuccess: false,
-                loginError: false,      
-            };
-        case LOGOUT_FAILURE:
-            return {
-                ...state,
-                loginSubmitted: false,
-                loginError: true,
-            };
+    case LOGOUT_SUCCESS:
+        return {
+            ...state,
+            email: '',
+            token: '',
+            name: '',
+            loginSuccess: false,
+            loginError: false,      
+        };
+    case LOGOUT_FAILURE:
+        return {
+            ...state,
+            loginSubmitted: false,
+            loginError: true,
+        };
 
-        case LOGOUT_SUBMITTED:
-        default:
-            return state;
+    case LOGOUT_SUBMITTED:
+    default:
+        return state;
     }
 }
