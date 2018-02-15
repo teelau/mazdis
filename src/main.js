@@ -11,6 +11,7 @@ import AcctPage from './views/AcctPage';
 import LogoutPage from './views/LogoutPage';
 import SpotDetail from './views/SpotDetail';
 import SpotList from './views/SpotList';
+import ReserveSpot from './views/ReserveSpot';
 
 import { checkLogin } from './actions/Login';
 
@@ -43,6 +44,9 @@ const GuestRouter = DrawerNavigator(
         'Spot Detail': { screen: SpotDetail, navigationOptions:
             { drawerLabel: <Hidden />}
         },
+        'Reserve Spot': { screen: ReserveSpot, navigationOptions:
+            { drawerLabel: <Hidden />}
+        },
     },
     {
         initialRouteName: 'Map',
@@ -59,6 +63,9 @@ const UserRouter = DrawerNavigator(
         'My Account': { screen: AcctPage },
         'Log Out': {screen: LogoutPage},
         'Spot Detail': { screen: SpotDetail, navigationOptions:
+            { drawerLabel: <Hidden />}
+        },
+        'Reserve Spot': { screen: ReserveSpot, navigationOptions:
             { drawerLabel: <Hidden />}
         },
     },

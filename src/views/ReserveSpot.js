@@ -27,7 +27,7 @@ import HeaderBar from '../components/HeaderBar';
 
 let { height, width } = Dimensions.get('window');
 
-class SpotDetail extends Component {
+class ReserveSpot extends Component {
 
     constructor(props){
         super(props);
@@ -38,77 +38,51 @@ class SpotDetail extends Component {
         const { title, address, city, availableSpots, id } = spot;
         return (
             <Card style={cardStyles.card}>
-                <CardItem style={cardStyles.titleCardItem}>
-                    <Text style={styles.nameTitle}>{ title }</Text>
-                    <Right>
-                        <Text> Spots Available </Text>
-                        <Text style={styles.availabilityLabel}>
-                            { availableSpots }
-                        </Text>
-                    </Right>
+                <CardItem>
+                    <Text style={styles.reserveLabel}>
+                        Reserving for:
+                    </Text>
                 </CardItem>
                 <CardItem>
-                    <Body>
-                        <Text style={styles.addressLabel}> {address} </Text>
-                        <Text style={styles.addressLabel}> {city} </Text>
-                    </Body>
+                    <Text style={styles.nameTitle}>{ title }</Text>
+                </CardItem>
+                <CardItem>
+                    <Text style={styles.addressLabel}> {address}, </Text>
+                    <Text style={styles.addressLabel}> {city} </Text>
+                </CardItem>
+                <CardItem>
+                    <Text> Please arrive at the parking spot within the next 30 minutes. </Text>
                 </CardItem>
                 <CardItem style={styles.cardItemStyle}>
                     <Button
                         style={styles.reserveButton}
-                        onPress={() => this.props.navigation.navigate('Reserve Spot', { ...spot })}
-                    >
-                        <Text style={styles.buttonText}> Reserve </Text>
+                        onPress={() => { console.log("Reserve Button Pressed") }}>
+                        <Text style={styles.buttonText}> Confirm Reservation </Text>
                     </Button>
                 </CardItem>
-                <CardItem>
-                    <Text> The reservation will be valid for 30 minutes  </Text>
-                </CardItem>
-            </Card>
-        );
-    }
-
-    renderMapSection(spot){
-        const { lat, lng } = spot;
-        return (
-            <Card style={cardStyles.card}>
-                <MapView
-                    style={styles.map}
-                    initialRegion={{
-                        latitude: lat,
-                        longitude: lng,
-                        latitudeDelta: 0.0922/4,
-                        longitudeDelta: 0.0421/4,
-                    }}
-                >
-                    <MapView.Marker
-                        onPress={() => {console.log('pressed')}}
-                        coordinate={{
-                            latitude: lat,
-                            longitude: lng
-                        }}
-                    />      
-                </MapView>
-                <CardItem style={cardStyles.titleCardItem}>
+                <CardItem style={styles.cardItemStyle}>
                     <Button 
                         style={styles.getDirectionButton} block
-                        onPress={() => { console.log("Get directions pressed") }}>
-                        <Text style={styles.buttonText}>Get Directions</Text>
+                        onPress={() => { this.props.navigation.navigate('Spot Detail') }}
+                    >
+                        <Text style={styles.buttonText}> Go Back </Text>
                     </Button>
                 </CardItem>
+
             </Card>
         );
     }
 
+
     render(){
+        console.log(this.props);
         const { params } = this.props.navigation.state;
         let spot = params;
         return(
             <Container style={{flex: 1}}>
                 <HeaderBar nav={this.props.navigation} />
                 <ScrollView style={styles.container}>
-                    { this.renderTitleSection(spot) }
-                    { this.renderMapSection(spot) }
+                    { this.renderTitleSection(spot, this.props.navigation) }
                 </ScrollView>
             </Container>
         );
@@ -127,7 +101,7 @@ const styles = StyleSheet.create({
         fontSize: 36,
         fontWeight: 'bold',
     },
-    availabilityLabel: {
+    reserveLabel: {
         fontSize: 24,
         fontWeight: 'bold'
     },
@@ -173,4 +147,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SpotDetail);
+export default connect(mapStateToProps, mapDispatchToProps)(ReserveSpot);
