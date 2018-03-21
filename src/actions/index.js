@@ -229,3 +229,58 @@ export function createDispatcherForPut(url, body, {actionLabel, successLabel, in
             });
     };
 }
+
+export function createDispatcherForDelete(url, {actionLabel, successLabel, invalidLabel, failureLabel }, options = {}){
+    const { auth, responseJsonFunc, headers } = options;
+    let reqHeaders = {
+        Accept: 'application/json',
+        ...headers,
+    };
+
+    return (dispatch) => {
+        dispatch({type: actionLabel});
+        getAuth(auth)
+            .then((token) => {
+                if (token) {
+                    reqHeaders.Authorization = `Bearer ${token}`;
+                }
+                return fetch(url, {
+                    method: 'DELETE',
+                    headers: reqHeaders,
+                });
+            }).then((response) => {            
+                if(response.status == 204) {
+                    return new Promise.resolve({success: true});
+                } else if ((response.status >= 400 && response.status <= 499) ||
+                    response.status == 500){
+                // TODO: api currently returns HTTP 500 for invalid registration, should be changed to 4xx.
+                    return response.json();
+                } else { // Reserved for offline or unknown errors, typically HTTP 500
+                    return new Promise.reject({error: response});
+                }
+            }).then((responseJson) => {
+                if(responseJson.message) {
+                    // POST request validation error
+                    return dispatch({
+                        type: invalidLabel,
+                        payload: {
+                            message: responseJson.message,
+                        },
+                    });
+                } else {
+                    // successful GET request
+                    return dispatch({
+                        type: successLabel,
+                        payload: responseJsonFunc ?
+                            responseJsonFunc(responseJson) :
+                            responseJson,
+                    });
+                }
+            }).catch((error) => {
+                return dispatch({
+                    type: failureLabel,
+                    payload: error,
+                });
+            });
+    };
+}
