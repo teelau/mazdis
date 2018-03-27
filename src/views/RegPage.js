@@ -170,6 +170,7 @@ function mapStateToProps(state) {
         regInvalid: state.regReducer.regInvalid,
         regInvalidMsg: state.regReducer.regInvalidMsg,
         regSubmitted: state.regReducer.regSubmitted,
+        regSuccess: state.regReducer.regSuccess,
     };
 }
 

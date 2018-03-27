@@ -8,6 +8,10 @@ import {
     RES_SUCCESS,
     RES_INVALID,
     RES_FAILURE,
+    DELETE_RES,
+    DELETE_RES_SUCCESS,
+    DELETE_RES_INVALID,
+    DELETE_RES_FAILURE,
 } from '../actions/Reservation';
 
 const initialState = {
@@ -23,6 +27,12 @@ const initialState = {
     resFetchInvalid: false,
     resFetchError: false,   
     resList: {},
+
+    resDelete: false,
+    resDeleteSuccess: false,
+    resDeleteInvalid: false,
+    resDeleteError: false,
+    resDeleteMsg: {},
 };
 
 export default function reservationReducer(state = initialState, action) {
@@ -85,6 +95,7 @@ export default function reservationReducer(state = initialState, action) {
             resFetchSuccess: false,
             resFetchInvalid: false,
             resFetchError: false,
+            resDeleteSuccess: false, // used to prevent infinite re-renders of My Bookings page
         };
 
     case FETCHING_RES_SUCCESS:
@@ -115,7 +126,41 @@ export default function reservationReducer(state = initialState, action) {
             resFetchError: true
         };
 
-        
+    case DELETE_RES:
+        return {
+            ...state,
+            resDelete: true,
+            resDeleteSuccess: false,
+            resDeleteInvalid: false,
+            resDeleteMsg: {},
+            resDeleteError: false,
+        };
+
+    case DELETE_RES_SUCCESS:
+        return {
+            resDelete: false,
+            resDeleteSuccess: true,
+            resDeleteInvalid: false,
+            resDeleteError: false,
+        };
+
+    case DELETE_RES_INVALID:
+        return {
+            resDelete: false,
+            resDeleteSuccess: false,
+            resDeleteInvalid: true,
+            resDeleteMsg: action.payload,
+            resDeleteError: false,  
+        };
+    
+    case DELETE_RES_FAILURE:
+        return {
+            resDelete: false,
+            resDeleteSuccess: false,
+            resDeleteInvalid: false,
+            resDeleteError: true,
+        };
+
     default:
         return state;
     }

@@ -329,7 +329,7 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     getDetailButton: {
-        backgroundColor: 'lightpink',
+        backgroundColor: 'blue',
         marginTop: 10
     },
     buttonText: {

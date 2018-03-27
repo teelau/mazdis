@@ -30,7 +30,7 @@ import {
 import moment from 'moment';
 import Modal from 'react-native-modal';
 
-import { fetchReservations } from '../actions/Reservation';
+import { fetchReservations, deleteReservation } from '../actions/Reservation';
 import { parkBike, retrieveBike } from '../actions/index'
 
 import { cardStyles } from '../components/CardStyles';
@@ -75,8 +75,21 @@ class ReservationList extends Component {
                 </CardItem>
                 <CardItem style={styles.cardItemStyle}>
                     <Text>
-                        Book time: {moment(bookTime).format("ddd, MMM. D, h:mm a")}{"\n"}
+                        Book time: {moment(bookTime).format("ddd, MMM. D, h:mm a")}{"\n\n"}
+                        You must arrive within 30 minutes of the booking time or you will be temporarily suspended
                     </Text>
+                </CardItem>
+                <CardItem style={styles.cardItemStyle}>
+                    <Text>
+                        You must cancel the reservations within 5 minutes of the booking time or you will be temporarily suspended
+                    </Text>
+                </CardItem>
+                <CardItem style={styles.cardItemStyle}>
+                    <Button 
+                        style={styles.cancelButton} block
+                        onPress={() => { this.props.deleteReservation() }}>
+                        <Text style={styles.buttonText}>Cancel Reservation</Text>
+                    </Button>
                 </CardItem>
                 <CardItem>
                     <Button 
@@ -163,6 +176,8 @@ class ReservationList extends Component {
 
     render() {
         // console.log(this.props.resList.currentBooking);
+        // this.props.resDeleteSuccess && this.props.navigation.navigate('My Reservations');
+        this.props.resDeleteSuccess && this.componentWillMount();
         return (
             <Container style={{flex: 1}}>
                 <HeaderBar
@@ -273,6 +288,10 @@ const styles = StyleSheet.create({
         backgroundColor: 'lightpink',
         marginTop: 10
     },
+    cancelButton: {
+        backgroundColor: 'red',
+        marginTop: 10
+    },
     buttonText: {
         color: 'white',
         fontSize: 18,
@@ -289,6 +308,9 @@ function mapDispatchToProps(dispatch) {
         fetchReservations: () => {
             dispatch(fetchReservations());
         },
+        deleteReservation: () => {
+            dispatch(deleteReservation());
+        }
     };
 }
 
@@ -299,6 +321,11 @@ function mapStateToProps(state) {
         resFetchInvalid: state.reservationReducer.resFetchInvalid,
         resFetchError: state.reservationReducer.resFetchError,
         resList: state.reservationReducer.resList,
+        resDelete: state.reservationReducer.resDelete,
+        resDeleteSuccess: state.reservationReducer.resDeleteSuccess,
+        resDeleteInvalid: state.reservationReducer.resDeleteInvalid,
+        resDeleteError: state.reservationReducer.resDeleteError,
+        resDeleteMsg: state.reservationReducer.resDeleteMsg,
     };
 }
 

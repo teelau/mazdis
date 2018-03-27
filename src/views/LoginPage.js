@@ -46,7 +46,7 @@ class LoginPage extends Component {
         this.onPressLogIn = this.onPressLogIn.bind(this);
         this.createInput = this.createInput.bind(this);
         this.scrollToInput = this.scrollToInput.bind(this);
-
+        this.onPressSignupLink = this.onPressSignupLink.bind(this);
         this.state = {
             // email: '',
             // password: '',
@@ -85,6 +85,7 @@ class LoginPage extends Component {
     }
     
     onPressSignupLink() {
+        this.props.navigation.navigate('Register');
     }
 
     renderLoginError() {
